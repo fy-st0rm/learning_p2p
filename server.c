@@ -8,8 +8,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
-
-#define PORT 8080
+#include <stdlib.h>
 
 #define IPV4 0x01
 
@@ -47,10 +46,12 @@ int main() {
 	}
 
 	// Prepare server address
+	int port = getenv("PORT") ? atoi(getenv("PORT")) : 8080;
+
 	struct sockaddr_in server_addr;
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_addr.s_addr = INADDR_ANY;
-	server_addr.sin_port = htons(PORT);
+	server_addr.sin_port = htons(port);
 
 	// Binding the socket
 	if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
@@ -58,7 +59,7 @@ int main() {
 		return 1;
 	}
 
-	printf("Server binded on port: %d\n", PORT);
+	printf("Server binded on port: %d\n", port);
 
 	while (1) {
 		struct sockaddr_in client_addr;

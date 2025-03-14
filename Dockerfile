@@ -17,4 +17,4 @@ RUN gcc server.c -o server
 EXPOSE 8080/udp
 
 # Run the server
-CMD ["sh", "-c", "./server $PORT"]
+ENTRYPOINT ["sh", "-c", "./server ${PORT:-8080}"]

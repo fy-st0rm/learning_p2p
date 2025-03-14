@@ -2,7 +2,7 @@
 FROM debian:latest
 
 # Install dependencies
-RUN apt-get update && apt-get install -y gcc make
+RUN apt-get update && apt-get install -y gcc make libc6
 
 # Set working directory
 WORKDIR /app
@@ -17,4 +17,4 @@ RUN gcc server.c -o server
 EXPOSE 8080/udp
 
 # Run the server
-CMD ["./server"]
+CMD ["sh", "-c", "./server $PORT"]
